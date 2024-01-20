@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum UserRole {
+  EMPLOYEE
+  ADMIN
+  TECHNICIAN
+}
+
+model User {
+  id            String          @id @default(cuid())
+  username      String?         @unique
+  password      String?
+  name          String?
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole        @default(EMPLOYEE)
+  signature     String?         @db.Text
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  ServiceReport ServiceReport[]
+
+  InstallationCompany   InstallationCompany? @relation(fields: [installationCompanyId], references: [id])
+  installationCompanyId String?
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model ServiceReport {
+  id                     String                   @id @default(cuid())
+  number                 Int?                      @unique @default(autoincrement())
+  employeeId             String
+  customerId             String
+  companyId              String
+  serviceDate            DateTime
+  serviceDetails         String?                  @db.Text
+  serviceStatus          String?
+  pdfReport              String?                  @db.Text
+  customerObservations   String?                  @db.Text
+  technicianObservations String?                  @db.Text
+  training               String? // Directv GO, On Demand, Canal 100
+  closureInfo            String? // IVR, Optimus, Call Center
+  services               ServiceReportToService[]
+  products               ProductToServiceReport[]
+  employee               User                     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  customer               Customer                 @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  company                InstallationCompany      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, customerId])
+}
+
+model Customer {
+  id               String          @id @default(cuid())
+  name             String
+  address          String
+  district         String
+  subscriptionDate DateTime
+  email            String?         @unique
+  cellNumber       String?
+  signature        String?         @db.Text
+  ServiceReport    ServiceReport[]
+}
+
+model InstallationCompany {
+  id            String          @id @default(cuid())
+  name          String
+  address       String
+  phone         String?
+  email         String?         @unique
+  website       String?
+  User          User[]
+  ServiceReport ServiceReport[]
+}
+
+model Service {
+  id          String                   @id @default(cuid())
+  code        String
+  serviceName String
+  woNumber    String                   @unique
+  reports     ServiceReportToService[]
+}
+
+model ServiceReportToService {
+  serviceId       String
+  serviceReportId String
+  service         Service       @relation(fields: [serviceId], references: [id])
+  serviceReport   ServiceReport @relation(fields: [serviceReportId], references: [id])
+
+  @@id([serviceId, serviceReportId])
+}
+
+model Product {
+  id      String                   @id @default(cuid())
+  item    String
+  reports ProductToServiceReport[]
+}
+
+model ProductToServiceReport {
+  productId       String
+  serviceReportId String
+  quantityUsed    Int
+  product         Product       @relation(fields: [productId], references: [id])
+  serviceReport   ServiceReport @relation(fields: [serviceReportId], references: [id])
+
+  @@id([productId, serviceReportId])
+}
