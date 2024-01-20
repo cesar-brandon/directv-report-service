@@ -34,7 +34,7 @@ export function LoginCard() {
   };
   return (
     <Card
-      className="absolute w-full flex flex-col items-center justify-center h-full sm:w-[27rem] sm:h-auto
+      className="absolute w-full flex flex-col items-center justify-center sm:block h-full sm:w-[27rem] sm:h-auto
        p-6 dark:bg-background/60 backdrop-blur-md
        top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl rounded-3xl"
     >
