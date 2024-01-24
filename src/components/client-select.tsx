@@ -129,7 +129,7 @@ function CommandItemClient({
       <div className="flex gap-3">
         <Avatar>
           <AvatarImage
-            src=""
+            src={client.image}
             alt="user profile image"
             className="object-cover"
           />

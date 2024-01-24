@@ -103,6 +103,7 @@ model Customer {
   email            String?         @unique
   cellNumber       String?
   signature        String?         @db.Text
+  image            String?
   ServiceReport    ServiceReport[]
 }
 

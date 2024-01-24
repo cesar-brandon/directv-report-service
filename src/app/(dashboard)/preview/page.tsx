@@ -3,7 +3,7 @@
 import PreviewPDF from "@/components/preview-pdf";
 
 const dataDetail: ReportServiceTable = {
-  id: "clrn3cz3e0001lv0fg4hvh7iq",
+  id: "clrrzyiph0001eqjfd72wzhzw",
   number: "1",
   serviceDate: "2024-01-21T06:02:15.296Z",
   name: "Maria Rodriguez",

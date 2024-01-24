@@ -38,3 +38,6 @@ next-env.d.ts
 
 # IDE
 .vscode/*
+
+# prisma
+prisma/migrations/*

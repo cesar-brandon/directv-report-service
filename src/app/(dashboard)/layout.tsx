@@ -7,8 +7,10 @@ import { redirect } from "next/navigation";
 
 export default async function LoginLayout({
   children,
+  profile,
 }: {
   children: React.ReactNode;
+  profile: React.ReactNode;
 }) {
   const session = await getAuthSession();
 
@@ -23,6 +25,7 @@ export default async function LoginLayout({
         </div>
 
         {children}
+        {profile}
       </div>
     );
   }

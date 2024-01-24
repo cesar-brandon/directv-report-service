@@ -53,8 +53,8 @@ const PreviewPDF = ({ dataDetail }: Props) => {
   }
 
   return (
-    <PDFViewer style={{ width: "100%", height: "100%", borderRadius: "15px"}}>
-      {data && <PDF />}
+    <PDFViewer style={{ width: "100%", height: "100%", borderRadius: "15px" }}>
+      {data && <PDF data={data} />}
     </PDFViewer>
   );
 };

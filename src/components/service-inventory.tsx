@@ -124,6 +124,7 @@ export function ServiceInventory({ form }: Props) {
                         {...field}
                         type="number"
                         className="w-[8rem]"
+                        min={1}
                         onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>

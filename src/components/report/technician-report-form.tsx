@@ -33,7 +33,12 @@ export function TechnicianReportForm({ user, onSubmit, step }: Props) {
       services: [],
       training: "",
       closureInfo: "",
-      products: [],
+      products: [
+        {
+          id: "",
+          quantity: 0,
+        },
+      ],
       technicianObservations: "",
       customerObservations: "",
       signature: "",
@@ -45,20 +50,7 @@ export function TechnicianReportForm({ user, onSubmit, step }: Props) {
       <form id="add-report-form" onSubmit={form.handleSubmit(onSubmit)}>
         {/* <Button onClick={() => console.log(form.getValues())}>Log</Button> */}
         <div className="flex flex-col gap-6 mb-20">
-          <div className="absolute flex w-[20%] right-[5rem] xl:right-[11.5rem] top-[5rem]">
-            <FormField
-              control={form.control}
-              name="number"
-              render={({ field }) => (
-                <FormItem className="p-2 w-[50%] mb-8">
-                  <FormControl>
-                    <Input className="bg-muted" disabled type="text" value="" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+          <div className="absolute flex w-[20%] right-0 top-[6rem] gap-4">
             <Input
               value={new Date().toLocaleDateString()}
               className="bg-muted my-2 w-[50%]"

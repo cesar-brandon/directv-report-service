@@ -31,7 +31,7 @@ export function UserDropdownMenu({ user }: Props) {
       <DropdownMenuContent className="w-56 mr-4">
         <DropdownMenuLabel>Opciones</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link className="flex items-center" href="/profile">
+        <Link className="flex items-center" href={`/${user?.username}`}>
           <Button
             variant="ghost"
             className="w-full flex items-center justify-start"

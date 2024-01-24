@@ -4,35 +4,146 @@ import {
   Text,
   Page,
   Image,
-  Svg,
-  Polygon,
-  Rect,
+  View,
 } from "@react-pdf/renderer";
 import React from "react";
 
 interface Props {
-  data: ReportServiceTable;
+  data: ReportService;
 }
 // eslint-disable-next-line react/display-name
-export const PDF = React.memo(() => {
+export const PDF = React.memo(({ data }: Props) => {
   return (
     <Document title="Reporte de Servicio" author="directv">
       <Page size="A4" style={styles.Page}>
-        <Text style={styles.TextCenter}>Reporte de Servicio</Text>
+        <Image src="/dtv-logo-blue.png" style={stylesImages.ImageHeader} />
+        <View style={styles.ViewTextNumber}>
+          <Text>Reporte de Servicio N° {data.number}</Text>
+        </View>
+        <View style={{ padding: "15px" }}>
+          <View style={styles.ViewHeader}>
+            <View style={[styles.ViewHeaderInfo, styles.ViewHeadEnterprise]}>
+              <Text style={styles.textCell}>RAZÓN SOCIAL: lorem</Text>
+              <Text style={styles.textCell}>RUC: lorem</Text>
+              <Text style={styles.textCell}>TELÉFONO MÓVIL: lorem</Text>
+              <Text style={styles.textCell}>CORREO: sdfsdfdsfdsf</Text>
+              <Text style={styles.textCell}>PÁGINA WEB: sfsdfsf</Text>
+              <Text style={styles.textCell}>OFICINA: Av. Brasil 2980</Text>
+              <Text style={styles.textCell}>PORTAFOLIO DIGITAL: sfsfsdfsf</Text>
+            </View>
+            <View style={styles.ViewHeaderInfo}>
+              <Text style={styles.textCell}>FECHA: {data.serviceDate}</Text>
+              <Text style={styles.textCell}>REFERENCIA: {data.number}</Text>
+              <Text style={styles.textCell}>
+                ELABORADO POR: {data.employee.name}
+              </Text>
+              <Text style={styles.textCell}>
+                APROBADO POR: {data.customer.name}
+              </Text>
+              <Text style={styles.textCell}>CORREO: {data.employee.email}</Text>
+              <Text style={styles.textCell}>
+                TELÉFONO MÓVIL: {data.employee.role}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            fontSize: "8",
+            border: "1.5px solid #000",
+            borderRadius: 10,
+            marginBottom: "15px",
+          }}
+        >
+          <Text style={styles.textTitleBorderBotton}>PRESENTACIÓN</Text>
+          <View
+            style={{ display: "flex", flexDirection: "row", padding: "8px" }}
+          >
+            <View>
+              <Text style={styles.textCell}>NOMBRE DEL PROSPECTO:</Text>
+              <Text style={styles.textCell}>RUC: </Text>
+              <Text style={styles.textCell}>DATOS DE NEGOCIO:</Text>
+              <Text style={styles.textCell}>DIRECCIÓN:</Text>
+            </View>
+            <View style={{ marginLeft: "5px" }}>
+              <Text style={styles.textCell}>NOMBRE DEL NEGOCIO:</Text>
+              <Text style={styles.textCell}>CORREO: {data?.company.email}</Text>
+              <Text style={styles.textCell}>TELÉFONO: +51</Text>
+            </View>
+          </View>
+        </View>
+        <View style={stylesTable.table}>
+          <Text style={styles.textTitleBorderBotton}>1. CARACTERÍSTICAS</Text>
+          <View style={stylesTableCharacteristics.tableRow}>
+            <View style={stylesTableCharacteristics.tableCol1}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                AREA
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.tableCol2}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                ITEM
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.tableCol3}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                DETALLE
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.tableCol4}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                PAQUETE 1
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.tableCol4}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                PAQUETE 2
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.table4Background}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                PAQUETE 3
+              </Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "right",
+                fontSize: "8px",
+                paddingRight: "20px",
+              }}
+            >
+              RECOMENDADO
+            </Text>
+          </View>
+        </View>
       </Page>
     </Document>
   );
 });
+
+const colorPrimary = "#00ADEF";
+const backgroundColor = "#020817";
 
 const stylesImages = StyleSheet.create({
   ImageHeader: {
     position: "absolute",
     top: "0px",
     left: "0px",
-    width: "50%",
+    width: "30%",
     height: "auto",
-    marginTop: 0,
-    marginLeft: 0,
+    marginTop: 20,
+    marginLeft: 20,
   },
   ImageFooter: {
     position: "absolute",
@@ -55,7 +166,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     fontSize: 8,
     marginBottom: "15px",
-    marginTop: "100px",
+    marginTop: "60px",
   },
   ViewHeaderInfo: {
     border: "1.5px solid #283C4C",
@@ -69,7 +180,7 @@ const styles = StyleSheet.create({
   },
   ViewTextNumber: {
     position: "absolute",
-    top: "100px",
+    top: "20px",
     right: "0px",
     display: "flex",
     alignItems: "center",
@@ -80,8 +191,8 @@ const styles = StyleSheet.create({
     fontSize: "14px",
     fontWeight: "semibold",
     paddingLeft: "15px",
-    backgroundColor: "#283C4C",
-    color: "#DAFC4A",
+    backgroundColor: backgroundColor,
+    color: colorPrimary,
     borderTopLeftRadius: "10px",
     borderBottomLeftRadius: "10px",
   },

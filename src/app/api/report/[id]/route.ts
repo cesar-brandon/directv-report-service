@@ -14,10 +14,39 @@ export async function GET(
   try {
     const reportDetails = await db.serviceReport.findUnique({
       where: { id: params.id },
+      include: {
+        employee: true,
+        company: true,
+        customer: true,
+        services: {
+          select: {
+            service: {
+              select: {
+                id: true,
+                code: true,
+                serviceName: true,
+                woNumber: true,
+              },
+            },
+          },
+        },
+        products: {
+          select: {
+            product: {
+              select: {
+                id: true,
+                item: true,
+              },
+            },
+            quantityUsed: true,
+          },
+        },
+      },
     });
 
     return new Response(JSON.stringify(reportDetails));
   } catch (error) {
+    console.log(error);
     return new Response("Error", { status: 500 });
   }
 }
