@@ -18,7 +18,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -39,25 +39,16 @@ async function getReports() {
   return response.data;
 }
 
+const columnLabels: { [key: string]: string } = {
+  number: "Nº Informe",
+  serviceDate: "Fecha de Informe",
+  name: "Cliente",
+  address: "Dirección",
+  district: "Distrito",
+};
+
 export function ReportDataTable() {
-  // id: string;
-  // reportNumber: string;
-  // client: string;
-  // address: string;
-  // province: string;
-  // district: string;
-  // reportDate: string;
-  const [data, setData] = useState([{
-    id: "1",
-    reportNumber: "001",
-    client: "Jose Mensoza Saravia",
-    address: "Su Casa",
-    province: "Chincha",
-    district: "Chincha Alta",
-    reportDate: "18/01/2024",
-  }])
-  const [isLoading, setIsLoading] = useState(false)
-  // const { data, isLoading } = useQuery("reports", getReports);
+  const { data, isLoading } = useQuery("reports", getReports);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -88,6 +79,7 @@ export function ReportDataTable() {
       globalFilter,
     },
   });
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -117,7 +109,7 @@ export function ReportDataTable() {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {columnLabels[column.id] || column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}

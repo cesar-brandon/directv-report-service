@@ -1,0 +1,20 @@
+"use client";
+
+import PreviewPDF from "@/components/preview-pdf";
+
+const dataDetail: ReportServiceTable = {
+  id: "clrn3cz3e0001lv0fg4hvh7iq",
+  number: "1",
+  serviceDate: "2024-01-21T06:02:15.296Z",
+  name: "Maria Rodriguez",
+  address: "Avenida Siempre Viva 456",
+  district: "Grocio Prado",
+};
+
+export default function Page() {
+  return (
+    <div className="w-full h-[85vh]">
+      <PreviewPDF dataDetail={dataDetail} />
+    </div>
+  );
+}

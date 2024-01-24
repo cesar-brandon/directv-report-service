@@ -6,7 +6,7 @@ import React, { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-// const PreviewPDF = React.lazy(() => import("../../PreviewPDF"));
+const PreviewPDF = React.lazy(() => import("@/components/preview-pdf"));
 
 export const MainColumns: ColumnDef<RowData>[] = [
   {
@@ -33,7 +33,7 @@ export const MainColumns: ColumnDef<RowData>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "reportNumber",
+    accessorKey: "number",
     header: ({ column }) => {
       return (
         <Button
@@ -45,10 +45,10 @@ export const MainColumns: ColumnDef<RowData>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("reportNumber")}</div>,
+    cell: ({ row }) => <div>{row.getValue("number")}</div>,
   },
   {
-    accessorKey: "client",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
@@ -60,7 +60,7 @@ export const MainColumns: ColumnDef<RowData>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("client")}</div>,
+    cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "address",
@@ -78,21 +78,6 @@ export const MainColumns: ColumnDef<RowData>[] = [
     cell: ({ row }) => <div>{row.getValue("address")}</div>,
   },
   {
-    accessorKey: "province",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Provicia
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div>{row.getValue("province")}</div>,
-  },
-  {
     accessorKey: "district",
     header: ({ column }) => {
       return (
@@ -108,7 +93,7 @@ export const MainColumns: ColumnDef<RowData>[] = [
     cell: ({ row }) => <div>{row.getValue("district")}</div>,
   },
   {
-    accessorKey: "reportDate",
+    accessorKey: "serviceDate",
     header: ({ column }) => {
       return (
         <Button
@@ -120,9 +105,13 @@ export const MainColumns: ColumnDef<RowData>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("reportDate")}</div>
-    ),
+    cell: ({ row }) => {
+      const serviceDate = new Date(
+        row.getValue("serviceDate")
+      ).toLocaleDateString();
+
+      return <div className="lowercase">{serviceDate}</div>;
+    },
   },
   {
     id: "actions",
@@ -137,7 +126,11 @@ export const MainColumns: ColumnDef<RowData>[] = [
                 <Eye className="h-4 w-4" />
               </Button>
             </SheetTrigger>
-            <SheetContent className="min-w-full md:min-w-[30rem] lg:min-w-[40rem]">PDF</SheetContent>
+            <SheetContent className="min-w-full md:min-w-[30rem] lg:min-w-[40rem]">
+              <Suspense fallback={<Skeleton className="w-full h-full" />}>
+                <PreviewPDF dataDetail={item as ReportServiceTable} />
+              </Suspense>
+            </SheetContent>
           </Sheet>
         </div>
       );

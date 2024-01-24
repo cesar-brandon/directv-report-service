@@ -9,39 +9,12 @@ export async function POST(request: Request) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  //   {
-  //     "number": 0,
-  //     "serviceDate": "18/1/2024",
-  //     "employeeId": "clrjo93tf0001e49r7qgz5fqi",
-  //     "customerId": "clrikv5i30000lqe8b5wggndz",
-  //     "companyId": "clrjo3xo0000008l95xbh1ilc",
-  //     "services": [
-  //         "clrj1fmbj000008l47paddcx2",
-  //         "clrj19a0y000308la5iya2h9z",
-  //         "clrj1fmbj000008l47paddcxl",
-  //         "clrj1930d000108lacfxt2393"
-  //     ],
-  //     "training": "Directv GO,Grabación",
-  //     "closureInfo": "Call Center",
-  //     "products": [
-  //         {
-  //             "id": "5",
-  //             "quantity": 12
-  //         }
-  //     ],
-  //     "technicianObservations": "sdfsdf",
-  //     "customerObservations": "dadasdasda",
-  //     "signature": "",
-  //     "clientId": "clrikv5i30000lqe8b5wggndz"
-  // }
-
   try {
-    const reportService = db.serviceReport.create({
+    const reportService = await db.serviceReport.create({
       data: {
         employeeId: body.employeeId,
         customerId: body.customerId,
         companyId: body.companyId,
-        serviceDate: new Date(body.serviceDate),
         technicianObservations: body.technicianObservations,
         customerObservations: body.customerObservations,
         training: body.training,
@@ -61,7 +34,7 @@ export async function POST(request: Request) {
       },
     });
 
-    const customer = db.customer.update({
+    const customer = await db.customer.update({
       where: {
         id: body.customerId,
       },
@@ -69,11 +42,9 @@ export async function POST(request: Request) {
         signature: body.signature,
       },
     });
-    console.log(reportService);
 
     return new Response("OK", { status: 200 });
   } catch (error) {
-    console.log(error);
     return new Response("Error", { status: 500 });
   }
 }

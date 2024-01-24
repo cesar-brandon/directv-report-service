@@ -27,10 +27,9 @@ type Product = {
 
 interface ReportServiceTable {
   id: string;
-  reportNumber: string;
-  client: string;
+  number: string;
+  name: string;
   address: string;
-  province: string;
   district: string;
-  reportDate: string;
+  serviceDate: string;
 }

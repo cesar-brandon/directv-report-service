@@ -8,32 +8,25 @@ import { PDF } from "./pdf";
 interface Props {
   dataDetail: ReportServiceTable;
 }
+
+async function getReportDetail(id: string) {
+  const res = await axios.get(`/api/report/${id}`);
+  return res.data;
+}
+
 const PreviewPDF = ({ dataDetail }: Props) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [data, setData] = useState<ReportServiceTable[]>([
+
+  const { data, isLoading } = useQuery(
+    ["reportDetail", dataDetail.id],
+    () => getReportDetail(dataDetail.id),
     {
-      id: "1",
-      reportNumber: "001",
-      client: "Jose Mensoza Saravia",
-      address: "Su Casa",
-      province: "Chincha",
-      district: "Chincha Alta",
-      reportDate: "18/01/2024",
-    },
-  ]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  //   const { data, isLoading, error } = useQuery(
-  //     ["proforma", dataDetail.proforma_id],
-  //     async () => {
-  //       const res = await axios.get(`/proformas/${dataDetail.proforma_id}`);
-  //       return res.data;
-  //     }
-  //   );
-
+      enabled: !!dataDetail.id,
+    }
+  );
   useEffect(() => {
     setLoadingProgress(0);
-    const increment = 100 / (1.6 * 10);
+    const increment = 100 / (0.5 * 10);
 
     const intervalId = setInterval(() => {
       setLoadingProgress((prevProgress) => {
@@ -60,8 +53,8 @@ const PreviewPDF = ({ dataDetail }: Props) => {
   }
 
   return (
-    <PDFViewer style={{ width: "100%", height: "80vh" }}>
-      {data && <PDF  />}
+    <PDFViewer style={{ width: "100%", height: "100%", borderRadius: "15px"}}>
+      {data && <PDF />}
     </PDFViewer>
   );
 };

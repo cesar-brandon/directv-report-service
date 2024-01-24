@@ -34,7 +34,7 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <Providers attribute="class" defaultTheme="light" enableSystem>
+        <Providers attribute="class" defaultTheme="dark" enableSystem>
           {children}
           <Toaster />
           <TailwindIndicator />

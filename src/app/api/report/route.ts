@@ -9,9 +9,27 @@ export async function GET(request: Request) {
   }
 
   try {
-    const reports = await db.serviceReport.findMany();
+    const reports = await db.serviceReport.findMany({
+      select: {
+        id: true,
+        number: true,
+        serviceDate: true,
+        customer: {
+          select: {
+            name: true,
+            address: true,
+            district: true,
+          },
+        },
+      },
+    });
 
-    return new Response(JSON.stringify(reports));
+    const flattenedReports = reports.map((report) => {
+      const { customer, ...otherProps } = report;
+      return { ...otherProps, ...customer };
+    });
+
+    return new Response(JSON.stringify(flattenedReports));
   } catch (error) {
     return new Response("Error", { status: 500 });
   }

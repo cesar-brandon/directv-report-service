@@ -35,8 +35,7 @@ export function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     setIsLoading(true);
-    try {
-      console.log(values);
+    try {;
       const result = await signIn("credentials", {
         username: values.username,
         password: values.password,

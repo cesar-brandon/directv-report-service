@@ -27,8 +27,6 @@ export function TechnicianReportForm({ user, onSubmit, step }: Props) {
   const form = useForm<z.infer<typeof ServiceReportSchema>>({
     resolver: zodResolver(ServiceReportSchema),
     defaultValues: {
-      number: 0,
-      serviceDate: new Date().toLocaleDateString(),
       employeeId: user?.id,
       customerId: "",
       companyId: user?.installationCompany?.id,
@@ -61,17 +59,10 @@ export function TechnicianReportForm({ user, onSubmit, step }: Props) {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="serviceDate"
-              render={({ field }) => (
-                <FormItem className="p-2 w-[50%] mb-8">
-                  <FormControl>
-                    <Input className="bg-muted" {...field} disabled />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+            <Input
+              value={new Date().toLocaleDateString()}
+              className="bg-muted my-2 w-[50%]"
+              disabled
             />
           </div>
           {step === 1 && (

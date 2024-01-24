@@ -6,7 +6,7 @@ export default function LoginPage() {
     <div className="w-screen h-screen overflow-hidden">
       <Image
         src="/directv-back-3.jpg"
-        className="w-full h-full object-cover dark:blur-sm"
+        className="w-full h-full object-cover scale-105 blur-sm"
         width={1000}
         height={1000}
         alt="Directv background"

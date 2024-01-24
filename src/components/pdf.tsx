@@ -1,4 +1,13 @@
-import { StyleSheet, Document, Text, Page } from "@react-pdf/renderer";
+import {
+  StyleSheet,
+  Document,
+  Text,
+  Page,
+  Image,
+  Svg,
+  Polygon,
+  Rect,
+} from "@react-pdf/renderer";
 import React from "react";
 
 interface Props {
@@ -7,9 +16,9 @@ interface Props {
 // eslint-disable-next-line react/display-name
 export const PDF = React.memo(() => {
   return (
-    <Document>
+    <Document title="Reporte de Servicio" author="directv">
       <Page size="A4" style={styles.Page}>
-        <Text style={styles.TextCenter}>PROFORMA</Text>
+        <Text style={styles.TextCenter}>Reporte de Servicio</Text>
       </Page>
     </Document>
   );
@@ -31,30 +40,6 @@ const stylesImages = StyleSheet.create({
     left: "0px",
     right: "0px",
     height: "auto",
-  },
-  Ellipse: {
-    position: "absolute",
-    width: "70px",
-  },
-  Ellipse1: {
-    top: "130px",
-    left: "-35px",
-    width: "70px",
-  },
-  Ellipse2: {
-    top: "30%",
-    right: "-30px",
-    width: "70px",
-  },
-  Ellipse3: {
-    top: "50%",
-    left: "-35px",
-    width: "70px",
-  },
-  Ellipse8: {
-    bottom: "130px",
-    right: "-20px",
-    width: "70px",
   },
 });
 

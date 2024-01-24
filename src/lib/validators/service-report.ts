@@ -6,8 +6,6 @@ export const InventorySchema = z.object({
 });
 
 export const ServiceReportSchema = z.object({
-  number: z.number(),
-  serviceDate: z.string(),
   employeeId: z.string(),
   customerId: z.string().min(1, {
     message: "Debe seleccionar un cliente",

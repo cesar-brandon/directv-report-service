@@ -16,6 +16,7 @@ export default function ClearButton({ canvasRef, clear }: ClearButtonProps) {
   return (
     <Button
       variant="outline"
+      type="button"
       className="rounded-none rounded-tr-[2.8px] border-0 border-b border-l focus-within:z-10"
       onClick={clearCanvas}
     >

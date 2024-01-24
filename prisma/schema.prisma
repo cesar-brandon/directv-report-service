@@ -73,11 +73,11 @@ model VerificationToken {
 
 model ServiceReport {
   id                     String                   @id @default(cuid())
-  number                 Int?                      @unique @default(autoincrement())
+  number                 Int?                     @unique @default(autoincrement())
   employeeId             String
   customerId             String
   companyId              String
-  serviceDate            DateTime
+  serviceDate            DateTime                 @default(now())
   serviceDetails         String?                  @db.Text
   serviceStatus          String?
   pdfReport              String?                  @db.Text
