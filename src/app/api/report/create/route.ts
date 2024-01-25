@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       },
     });
 
-    if (body.signature === null) return new Response("OK", { status: 200 });
+    if (body.signature === "firmado") return new Response("OK", { status: 200 });
 
     await db.customer.update({
       where: {
