@@ -15,10 +15,8 @@ export function ReportFormServiceInfo({ form }: Props) {
       <p className="font-bold mb-4">Información de Servicio</p>
       <div className="flex flex-col gap-8 p-4">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="flex flex-col gap-3">
-            <Label>Servicios:</Label>
-            <ServiceComboboxMulti form={form} />
-          </div>
+          <ServiceComboboxMulti form={form} />
+
           <FormField
             control={form.control}
             name="training"
@@ -41,7 +39,7 @@ export function ReportFormServiceInfo({ form }: Props) {
                 label="Cerrado por:"
               />
             )}
-          />  
+          />
           <ServiceInventory form={form} />
         </div>
       </div>

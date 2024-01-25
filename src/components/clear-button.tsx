@@ -5,7 +5,7 @@ interface ClearButtonProps {
   clear: () => void;
 }
 
-export default function ClearButton({ canvasRef, clear }: ClearButtonProps) {
+export default function cClearButton({ canvasRef, clear }: ClearButtonProps) {
   const clearCanvas = () => {
     const canvasElement = canvasRef.current;
     if (!canvasElement) return;
@@ -17,7 +17,7 @@ export default function ClearButton({ canvasRef, clear }: ClearButtonProps) {
     <Button
       variant="outline"
       type="button"
-      className="rounded-none rounded-tr-[2.8px] border-0 border-b border-l focus-within:z-10"
+      className="absolute right-[25px] top-[25px] flex select-none rounded-none rounded-bl rounded-tr-md border-0 border-b border-l focus-within:z-10"
       onClick={clearCanvas}
     >
       Clear

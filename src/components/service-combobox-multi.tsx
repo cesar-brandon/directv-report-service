@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { useQuery } from "react-query";
 import { ScrollArea } from "./ui/scroll-area";
-import { FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 
 interface Props {
   form: any;
@@ -57,9 +57,10 @@ export function ServiceComboboxMulti({ form }: Props) {
   return (
     <FormField
       control={form.control}
-      name="language"
+      name="services"
       render={({ field }) => (
         <FormItem className="flex flex-col">
+          <FormLabel className="mb-1">Servicios:</FormLabel>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>
@@ -67,7 +68,7 @@ export function ServiceComboboxMulti({ form }: Props) {
                   variant="outline"
                   role="combobox"
                   aria-expanded={open}
-                  className="w-[100%] justify-between"
+                  className="w-full justify-between"
                   onClick={handlePopoverToggle}
                 >
                   {selectedLabels.length > 0
@@ -90,10 +91,8 @@ export function ServiceComboboxMulti({ form }: Props) {
                       data.map((item: Service) => (
                         <CommandItem
                           key={item.id}
-                          value={item.id}
-                          onSelect={(currentValue) => {
-                            handleSelect(currentValue);
-                          }}
+                          value={item.serviceName}
+                          onSelect={() => handleSelect(item.id)}
                         >
                           <Check
                             className={cn(

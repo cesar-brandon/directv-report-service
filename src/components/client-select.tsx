@@ -39,11 +39,10 @@ async function getClients() {
 export function ClientSelectField({ form }: Props) {
   const [open, setOpen] = useState(false);
 
-  const {
-    data: clients,
-    isLoading,
-    error,
-  } = useQuery<Client[]>("clients", getClients);
+  const { data: clients, isLoading } = useQuery<Client[]>(
+    "clients",
+    getClients
+  );
 
   return (
     <FormField

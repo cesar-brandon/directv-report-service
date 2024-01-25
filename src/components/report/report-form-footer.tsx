@@ -17,9 +17,12 @@ export function ReportFormFooter({
 }: Props) {
   return (
     <div className="fixed w-full sm:right-0 bottom-0 bg-background flex gap-4 sm:justify-end py-4 px-0 sm:px-20 xl:px-40">
-      <Button variant="outline" className="relative">
-        <Link href="/">Cancelar</Link>
-      </Button>
+      <Link href="/">
+        <Button variant="outline" className="relative">
+          Cancelar
+        </Button>
+      </Link>
+
       {step === 1 && (
         <div>
           <Button className="relative" onClick={nextStep}>

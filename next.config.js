@@ -21,7 +21,17 @@ const nextConfig = {
                 pathname: '/564x/42/dc/3d/*',
             }
         ]
-    }
+    },
+
+    webpack: (config, { isServer }) => {
+        // Solo en el lado del cliente
+        if (!isServer) {
+            config.resolve.fallback.fs = false;
+        }
+
+        return config;
+    },
+
 }
 
 module.exports = nextConfig

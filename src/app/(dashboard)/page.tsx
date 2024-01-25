@@ -9,7 +9,7 @@ export default async function Home() {
   const user = session && session?.user;
 
   return (
-    <main className="h-screen overflow-hidden flex flex-col gap-4 mt-4 p-2">
+    <main className="overflow-hidden flex flex-col gap-4 mt-4 p-2">
       <h3 className="text-3xl mb-4 py-8 text-primary font-bold bg-muted/50 rounded text-center">Informes de Servicio</h3>
 
       <div className="flex gap-4">

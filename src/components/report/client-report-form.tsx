@@ -20,7 +20,7 @@ export function ClientReportForm({form}: Props) {
         </div>
         <div>
           <Label>Firma</Label>
-          <SignatureCanvas />
+          <SignatureCanvas form={form}/>
         </div>
       </div>
     </section>

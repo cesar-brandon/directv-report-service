@@ -90,8 +90,6 @@ model ServiceReport {
   employee               User                     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   customer               Customer                 @relation(fields: [customerId], references: [id], onDelete: Cascade)
   company                InstallationCompany      @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  @@unique([employeeId, customerId])
 }
 
 model Customer {

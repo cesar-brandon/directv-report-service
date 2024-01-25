@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const reportService = await db.serviceReport.create({
+    await db.serviceReport.create({
       data: {
         employeeId: body.employeeId,
         customerId: body.customerId,
@@ -34,7 +34,9 @@ export async function POST(request: Request) {
       },
     });
 
-    const customer = await db.customer.update({
+    if (body.signature === null) return new Response("OK", { status: 200 });
+
+    await db.customer.update({
       where: {
         id: body.customerId,
       },
@@ -45,6 +47,7 @@ export async function POST(request: Request) {
 
     return new Response("OK", { status: 200 });
   } catch (error) {
+    console.log(error);
     return new Response("Error", { status: 500 });
   }
 }
