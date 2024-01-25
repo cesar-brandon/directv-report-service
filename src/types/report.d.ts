@@ -12,6 +12,7 @@ interface Client {
   contactPersonEmail: string;
   createdAt: string;
   updatedAt: string;
+  signature: string;
 }
 
 type Service = {
@@ -35,7 +36,7 @@ interface ReportServiceTable {
   serviceDate: string;
 }
 
-interface Employee{
+interface Employee {
   id: string;
   username: string;
   password: string;
@@ -48,8 +49,9 @@ interface Employee{
   createdAt: string;
   updatedAt: string;
   installationCompanyId: string;
+  InstallationCompany: Company;
 }
-interface Customer{
+interface Customer {
   id: string;
   name: string;
   address: string;
@@ -60,7 +62,7 @@ interface Customer{
   signature: string;
   image: string;
 }
-interface Company{
+interface Company {
   id: string;
   name: string;
   address: string;
@@ -86,12 +88,10 @@ interface ReportService {
   training: string;
   closureInfo: string;
   products: {
-    productId: string;
-    serviceReportId: string;
-    quantityUsed: number;
+    product: Product;
+    quantityUsed: string;
   }[];
   services: {
-    serviceId: string;
-    serviceReportId: string;
+    service: Service;
   }[];
 }

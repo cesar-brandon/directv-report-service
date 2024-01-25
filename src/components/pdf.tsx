@@ -11,8 +11,15 @@ import React from "react";
 interface Props {
   data: ReportService;
 }
+
+const colorPrimary = "#00ADEF";
+const backgroundColor = "#020817";
+const borderColor = "#bfbfbf";
+
 // eslint-disable-next-line react/display-name
 export const PDF = React.memo(({ data }: Props) => {
+  const training = data.training.split(",");
+
   return (
     <Document title="Reporte de Servicio" author="directv">
       <Page size="A4" style={styles.Page}>
@@ -23,117 +30,284 @@ export const PDF = React.memo(({ data }: Props) => {
         <View style={{ padding: "15px" }}>
           <View style={styles.ViewHeader}>
             <View style={[styles.ViewHeaderInfo, styles.ViewHeadEnterprise]}>
-              <Text style={styles.textCell}>RAZÓN SOCIAL: lorem</Text>
-              <Text style={styles.textCell}>RUC: lorem</Text>
-              <Text style={styles.textCell}>TELÉFONO MÓVIL: lorem</Text>
-              <Text style={styles.textCell}>CORREO: sdfsdfdsfdsf</Text>
-              <Text style={styles.textCell}>PÁGINA WEB: sfsdfsf</Text>
-              <Text style={styles.textCell}>OFICINA: Av. Brasil 2980</Text>
-              <Text style={styles.textCell}>PORTAFOLIO DIGITAL: sfsfsdfsf</Text>
+              <Text style={styles.textCell}>
+                EMPRESA INSTALADORA: {data.employee.InstallationCompany.name}
+              </Text>
+              <Text style={styles.textCell}>TÉCNICO: {data.employee.name}</Text>
+              <Text style={styles.textCell}>
+                TELÉFONO MÓVIL: {data.employee.InstallationCompany.phone}
+              </Text>
+              <Text style={styles.textCell}>
+                CORREO: {data.employee.InstallationCompany.email}
+              </Text>
+              <Text style={styles.textCell}>
+                PÁGINA WEB: {data.employee.InstallationCompany.website}
+              </Text>
+              <Text style={styles.textCell}>
+                OFICINA: {data.employee.InstallationCompany.address}
+              </Text>
             </View>
             <View style={styles.ViewHeaderInfo}>
-              <Text style={styles.textCell}>FECHA: {data.serviceDate}</Text>
+              <Text style={styles.textCell}>
+                FECHA: {new Date(data.serviceDate).toLocaleDateString()}
+              </Text>
               <Text style={styles.textCell}>REFERENCIA: {data.number}</Text>
+              <Text style={styles.textCell}>CLIENTE: {data.customer.name}</Text>
               <Text style={styles.textCell}>
-                ELABORADO POR: {data.employee.name}
+                DIRECCIÓN/CALLE: {data.customer.address}
               </Text>
               <Text style={styles.textCell}>
-                APROBADO POR: {data.customer.name}
+                DISTRITO: {data.customer.district}
               </Text>
-              <Text style={styles.textCell}>CORREO: {data.employee.email}</Text>
-              <Text style={styles.textCell}>
-                TELÉFONO MÓVIL: {data.employee.role}
-              </Text>
+              <Text style={styles.textCell}>CORREO: {data.customer.email}</Text>
             </View>
           </View>
         </View>
+
+        <View style={stylesTable.table}>
+          <Text style={styles.textTitleBorderBotton}>SERVICIOS</Text>
+          <View style={stylesTableCharacteristics.tableRow}>
+            <View style={stylesTableCharacteristics.tableCol1}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                Código
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.tableCol2}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                Servicio
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.tableCol3}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                N° de WO IBS
+              </Text>
+            </View>
+          </View>
+          {data.services.map((item, index) => (
+            <View key={index} style={stylesTableCharacteristics.tableRow}>
+              <View style={stylesTableCharacteristics.tableCol1}>
+                <Text style={stylesTableCharacteristics.tableCell}>
+                  {item.service.code}
+                </Text>
+              </View>
+              <View style={stylesTableCharacteristics.tableCol2}>
+                <Text style={stylesTableCharacteristics.tableCell}>
+                  {item.service.serviceName}
+                </Text>
+              </View>
+              <View style={stylesTableCharacteristics.tableCol3}>
+                <Text style={stylesTableCharacteristics.tableCell}>
+                  {item.service.woNumber}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </View>
+
         <View
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
             fontSize: "8",
-            border: "1.5px solid #000",
+            border: "1.5px solid #bfbfbf",
             borderRadius: 10,
-            marginBottom: "15px",
+            marginTop: "15px",
+            overflow: "hidden",
           }}
         >
-          <Text style={styles.textTitleBorderBotton}>PRESENTACIÓN</Text>
-          <View
-            style={{ display: "flex", flexDirection: "row", padding: "8px" }}
-          >
-            <View>
-              <Text style={styles.textCell}>NOMBRE DEL PROSPECTO:</Text>
-              <Text style={styles.textCell}>RUC: </Text>
-              <Text style={styles.textCell}>DATOS DE NEGOCIO:</Text>
-              <Text style={styles.textCell}>DIRECCIÓN:</Text>
-            </View>
-            <View style={{ marginLeft: "5px" }}>
-              <Text style={styles.textCell}>NOMBRE DEL NEGOCIO:</Text>
-              <Text style={styles.textCell}>CORREO: {data?.company.email}</Text>
-              <Text style={styles.textCell}>TELÉFONO: +51</Text>
-            </View>
-          </View>
-        </View>
-        <View style={stylesTable.table}>
-          <Text style={styles.textTitleBorderBotton}>1. CARACTERÍSTICAS</Text>
-          <View style={stylesTableCharacteristics.tableRow}>
-            <View style={stylesTableCharacteristics.tableCol1}>
-              <Text style={stylesTableCharacteristics.tableCellTitle}>
-                AREA
-              </Text>
-            </View>
-            <View style={stylesTableCharacteristics.tableCol2}>
-              <Text style={stylesTableCharacteristics.tableCellTitle}>
-                ITEM
-              </Text>
-            </View>
-            <View style={stylesTableCharacteristics.tableCol3}>
-              <Text style={stylesTableCharacteristics.tableCellTitle}>
-                DETALLE
-              </Text>
-            </View>
-            <View style={stylesTableCharacteristics.tableCol4}>
-              <Text style={stylesTableCharacteristics.tableCellTitle}>
-                PAQUETE 1
-              </Text>
-            </View>
-            <View style={stylesTableCharacteristics.tableCol4}>
-              <Text style={stylesTableCharacteristics.tableCellTitle}>
-                PAQUETE 2
-              </Text>
-            </View>
-            <View style={stylesTableCharacteristics.table4Background}>
-              <Text style={stylesTableCharacteristics.tableCellTitle}>
-                PAQUETE 3
-              </Text>
+          <View>
+            <Text
+              style={[
+                styles.textTitleBorderBotton,
+                { backgroundColor: "#fff" },
+              ]}
+            >
+              Observaciones generales del técnico:
+            </Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                padding: "5px 9px",
+              }}
+            >
+              <Text style={{ fontSize: 8 }}>{data.technicianObservations}</Text>
             </View>
           </View>
 
           <View
             style={{
-              paddingTop: "5px",
-              paddingBottom: "5px",
+              borderTop: "1px solid #bfbfbf",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "10px",
             }}
           >
             <Text
+              style={[
+                styles.textTitleBorderBotton,
+                {
+                  backgroundColor: "transparent",
+                  width: "33  %",
+                  borderRight: "1px solid #bfbfbf",
+                  borderRadius: 0,
+                },
+              ]}
+            >
+              Capacitación al cliente:
+            </Text>
+            <View
               style={{
-                textAlign: "right",
-                fontSize: "8px",
-                paddingRight: "20px",
+                display: "flex",
+                flexDirection: "row",
+                padding: "5px 9px",
+                gap: "15px",
               }}
             >
-              RECOMENDADO
-            </Text>
+              {training.map((item, index) => (
+                <Text key={index} style={{ fontSize: 8 }}>
+                  {item},
+                </Text>
+              ))}
+            </View>
           </View>
+
+          <View
+            style={{
+              borderTop: "1px solid #bfbfbf",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Text
+              style={[
+                styles.textTitleBorderBotton,
+                {
+                  backgroundColor: "transparent",
+                  width: "33%",
+                  borderRight: "1px solid #bfbfbf",
+                  borderRadius: 0,
+                },
+              ]}
+            >
+              Cerrado por:
+            </Text>
+            <View style={{ padding: "5px 10px" }}>
+              <Text style={{ fontSize: 8 }}>{data.closureInfo}</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={stylesTable.table}>
+          <Text style={styles.textTitleBorderBotton}>
+            IVENTARIO NO SERIALIZADO
+          </Text>
+          <View style={stylesTableCharacteristics.tableRow}>
+            <View style={stylesTableCharacteristics.productTableCol1}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                Producto
+              </Text>
+            </View>
+            <View style={stylesTableCharacteristics.productTableCol2}>
+              <Text style={stylesTableCharacteristics.tableCellTitle}>
+                Cantidad
+              </Text>
+            </View>
+          </View>
+          {data.products.map((item, index) => (
+            <View key={index} style={stylesTableCharacteristics.tableRow}>
+              <View style={stylesTableCharacteristics.productTableCol1}>
+                <Text style={stylesTableCharacteristics.tableCell}>
+                  {item.product.item}
+                </Text>
+              </View>
+              <View style={stylesTableCharacteristics.productTableCol2}>
+                <Text style={stylesTableCharacteristics.tableCell}>
+                  {item.quantityUsed}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </View>
+        <View style={styles.ViewCard}>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              padding: "10px",
+              borderBottom: "1.5px solid #bfbfbf",
+            }}
+          >
+            <Text>Observaciones del Cliente:</Text>
+            <Text>{data.customerObservations}</Text>
+          </View>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <View
+              style={{
+                width: "100%",
+                borderRight: "1.5px solid #bfbfbf",
+                padding: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <View>
+                <Text>Firma del Cliente:</Text>
+                <Image
+                  src={data.customer.signature}
+                  style={{ width: "140px", margin: "0 auto" }}
+                />
+              </View>
+              <View
+                style={{ borderTop: "1.5px solid #bfbfbf", padding: "10px" }}
+              >
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text>{data.customer.name}</Text>
+                </View>
+              </View>
+            </View>
+            <View style={{ width: "100%", padding: "10px" }}>
+              <View>
+                <Text>Firma del Tecnico:</Text>
+                <Image
+                  src={data.employee.signature}
+                  style={{ width: "140px", margin: "0 auto" }}
+                />
+              </View>
+              <View
+                style={{ borderTop: "1.5px solid #bfbfbf", padding: "10px" }}
+              >
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text>{data.employee.name}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={stylesImages.Footer}>
+          <Text>{data.employee.InstallationCompany.name}</Text>
         </View>
       </Page>
     </Document>
   );
 });
-
-const colorPrimary = "#00ADEF";
-const backgroundColor = "#020817";
 
 const stylesImages = StyleSheet.create({
   ImageHeader: {
@@ -145,12 +319,16 @@ const stylesImages = StyleSheet.create({
     marginTop: 20,
     marginLeft: 20,
   },
-  ImageFooter: {
+  Footer: {
+    width: "120%",
     position: "absolute",
     bottom: "0px",
     left: "0px",
     right: "0px",
-    height: "auto",
+    padding: "10px",
+    fontSize: 12,
+    backgroundColor: colorPrimary,
+    color: "#fff",
   },
 });
 
@@ -159,17 +337,25 @@ const styles = StyleSheet.create({
   Page: {
     padding: "20px",
   },
+  ViewCard: {
+    width: "100%",
+    display: "flex",
+    border: "1.5px solid #bfbfbf",
+    borderRadius: 10,
+    overflow: "hidden",
+    fontSize: 10,
+    marginTop: "15px",
+  },
   ViewHeader: {
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "row",
     fontSize: 8,
-    marginBottom: "15px",
-    marginTop: "60px",
+    marginTop: "50px",
   },
   ViewHeaderInfo: {
-    border: "1.5px solid #283C4C",
+    border: "1.5px solid #bfbfbf",
     borderRadius: 10,
     padding: 5,
     width: "48%",
@@ -191,8 +377,8 @@ const styles = StyleSheet.create({
     fontSize: "14px",
     fontWeight: "semibold",
     paddingLeft: "15px",
-    backgroundColor: backgroundColor,
-    color: colorPrimary,
+    backgroundColor: colorPrimary,
+    color: "#fff",
     borderTopLeftRadius: "10px",
     borderBottomLeftRadius: "10px",
   },
@@ -205,8 +391,8 @@ const styles = StyleSheet.create({
     fontWeight: "light",
   },
   textTitleBorderBotton: {
-    backgroundColor: "#DADADA",
-    borderBottom: "1.5px solid #283C4C",
+    backgroundColor: "#e3e3e3",
+    borderBottom: "none",
     borderTopLeftRadius: "8px",
     borderTopRightRadius: "8px",
     paddingTop: 8,
@@ -220,7 +406,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   textTitleBackground: {
-    backgroundColor: "#DADADA",
+    backgroundColor: "#bfbfbf",
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 10,
@@ -236,7 +422,7 @@ const styles = StyleSheet.create({
     gap: "10px",
     flexDirection: "row",
     fontSize: 8,
-    border: "1.5px solid #283C4C",
+    border: "1.5px solid #bfbfbf",
     borderRadius: 10,
     marginTop: "15px",
     marginBottom: "15px",
@@ -271,9 +457,9 @@ const stylesTable = StyleSheet.create({
   table: {
     display: "flex",
     width: "auto",
-    border: "1.5px solid #283C4C",
+    border: "1.5px solid #bfbfbf",
     marginTop: "10px",
-    marginBotton: "5px",
+    marginBotton: "10px",
     borderRadius: "10px",
   },
   tableCancelarMarginTop: {
@@ -307,7 +493,7 @@ const stylesTable = StyleSheet.create({
   },
   tableText: {
     width: "100%",
-    border: "1.5px solid #000",
+    border: "1.5px solid #bfbfbf",
     borderTop: 0,
     borderRight: 0,
     borderLeft: 0,
@@ -350,38 +536,70 @@ const stylesTableCharacteristics = StyleSheet.create({
     borderWidth: 1,
     borderRightWidth: 0,
     borderBottomWidth: 0,
+    borderColor: borderColor,
   },
   tableRow: {
     margin: "auto",
     flexDirection: "row",
+    borderColor: borderColor,
   },
   tableCol: {
-    width: "16.6666%", // 100% / 6 columns
+    width: "36.6666%", // 100% / 6 columns
     borderStyle: "solid",
     borderWidth: 1,
     borderLeftWidth: 0,
-    borderTopWidth: 0,
+    borderTopWidth: 1,
+    borderBottom: "none",
+    borderColor: borderColor,
   },
-  tableCol1: {
-    width: "7%", // 100% / 6 columns
+
+
+  productTableCol1: {
+    width: "50%", 
     borderStyle: "solid",
     borderWidth: 1,
     borderLeftWidth: 0,
-    borderTopWidth: 0,
+    borderTopWidth: 1,
+    borderBottom: "none",
+    borderColor: borderColor,
+  },
+  productTableCol2: {
+    width: "50%", 
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
+    borderBottom: "none",
+    borderColor: borderColor,
+  },
+
+  tableCol1: {
+    width: "33%", // 100% / 6 columns
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
+    borderBottom: "none",
+    borderColor: borderColor,
   },
   tableCol2: {
-    width: "5%", // 100% / 6 columns
+    width: "33%", // 100% / 6 columns
     borderStyle: "solid",
     borderWidth: 1,
     borderLeftWidth: 0,
-    borderTopWidth: 0,
+    borderTopWidth: 1,
+    borderBottom: "none",
+    borderColor: borderColor,
   },
   tableCol3: {
-    width: "28%", // 100% / 6 columns
+    width: "34%", // 100% / 6 columns
     borderStyle: "solid",
     borderWidth: 1,
     borderLeftWidth: 0,
-    borderTopWidth: 0,
+    borderRight: "none",
+    borderTopWidth: 1,
+    borderBottom: "none",
+    borderColor: borderColor,
   },
   tableCol4: {
     width: "20%", // 100% / 6 columns

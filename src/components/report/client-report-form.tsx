@@ -6,7 +6,7 @@ interface Props {
   form: any;
 }
 
-export function ClientReportForm({form}: Props) {
+export function ClientReportForm({ form }: Props) {
   return (
     <section className="p-4 border rounded-lg">
       <h3 className="font-bold mb-4">Información del Cliente</h3>
@@ -18,10 +18,12 @@ export function ClientReportForm({form}: Props) {
             {...form.register("customerObservations")}
           />
         </div>
-        <div>
-          <Label>Firma</Label>
-          <SignatureCanvas form={form}/>
-        </div>
+        {form.watch("signature") !== "firmado" && (
+          <div>
+            <Label>Firma</Label>
+            <SignatureCanvas form={form} />
+          </div>
+        )}
       </div>
     </section>
   );

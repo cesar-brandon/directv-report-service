@@ -15,7 +15,11 @@ export async function GET(
     const reportDetails = await db.serviceReport.findUnique({
       where: { id: params.id },
       include: {
-        employee: true,
+        employee: {
+          include: {
+            InstallationCompany: true,
+          },
+        },
         company: true,
         customer: true,
         services: {
