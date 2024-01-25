@@ -126,7 +126,7 @@ export const MainColumns: ColumnDef<RowData>[] = [
                 <Eye className="h-4 w-4" />
               </Button>
             </SheetTrigger>
-            <SheetContent className="min-w-full md:min-w-[30rem] lg:min-w-[40rem]">
+            <SheetContent className="min-w-full lg:min-w-[45rem]">
               <Suspense fallback={<Skeleton className="w-full h-full" />}>
                 <PreviewPDF dataDetail={item as ReportServiceTable} />
               </Suspense>

@@ -116,8 +116,10 @@ function CommandItemClient({
       onSelect={() => {
         form.setValue("clientId", client.id);
         field.onChange(client.id);
-        if(client.signature !== null) {
+        if (client.signature !== null) {
           form.setValue("signature", "firmado");
+        } else {
+          form.setValue("signature", "no firmado");
         }
         setOpen(false);
       }}
