@@ -71,6 +71,12 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum ServiceStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
 model ServiceReport {
   id                     String                   @id @default(cuid())
   number                 Int?                     @unique @default(autoincrement())
@@ -79,7 +85,7 @@ model ServiceReport {
   companyId              String
   serviceDate            DateTime                 @default(now())
   serviceDetails         String?                  @db.Text
-  serviceStatus          String?
+  serviceStatus          ServiceStatus            @default(PENDING)
   pdfReport              String?                  @db.Text
   customerObservations   String?                  @db.Text
   technicianObservations String?                  @db.Text

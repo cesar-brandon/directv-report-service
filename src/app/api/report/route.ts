@@ -14,6 +14,7 @@ export async function GET(request: Request) {
         id: true,
         number: true,
         serviceDate: true,
+        serviceStatus: true,
         customer: {
           select: {
             name: true,

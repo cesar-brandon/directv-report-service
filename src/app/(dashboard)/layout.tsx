@@ -1,4 +1,5 @@
 import { Logo } from "@/components/icons";
+import { MainNav } from "@/components/main-nav";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserDropdownMenu } from "@/components/user-dropdown-menu";
 import { getAuthSession } from "@/lib/auth";
@@ -21,6 +22,7 @@ export default async function LoginLayout({
           <Link href="/">
             <Logo className="w-12 h-12" />
           </Link>
+          <MainNav className="hidden lg:flex" />
           <UserDropdownMenu user={session.user} />
         </div>
 

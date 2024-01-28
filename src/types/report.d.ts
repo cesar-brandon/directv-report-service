@@ -34,6 +34,7 @@ interface ReportServiceTable {
   address: string;
   district: string;
   serviceDate: string;
+  serviceStatus: string;
 }
 
 interface Employee {
