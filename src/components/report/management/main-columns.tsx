@@ -1,8 +1,9 @@
+"use client";
 import { ColumnDef, RowData } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, Eye, Loader2 } from "lucide-react";
-import React, { Suspense } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -20,7 +21,7 @@ import axios from "axios";
 import { toast } from "@/hooks/use-toast";
 import { useQueryClient } from "react-query";
 
-const PreviewPDF = React.lazy(() => import("@/components/preview-pdf"));
+const PreviewPDF = lazy(() => import("@/components/preview-pdf"));
 
 export const MainColumns: ColumnDef<RowData>[] = [
   {
@@ -133,8 +134,8 @@ export const MainColumns: ColumnDef<RowData>[] = [
       return <Button variant="ghost">Estado</Button>;
     },
     cell: ({ row }) => {
-      const [isLoading, setIsLoading] = React.useState(false);
-      const [isOpen, setIsOpen] = React.useState(false);
+      const [isLoading, setIsLoading] = useState(false);
+      const [isOpen, setIsOpen] = useState(false);
       const status = row.getValue("serviceStatus") as string;
       const id = (row.original as { id: string }).id;
 
@@ -159,7 +160,7 @@ export const MainColumns: ColumnDef<RowData>[] = [
               description: "Se actualizó el estado correctamente",
             });
             setIsOpen(false);
-            queryClient.invalidateQueries('reports');
+            queryClient.invalidateQueries("reports");
           }
         } catch (error) {
           toast({

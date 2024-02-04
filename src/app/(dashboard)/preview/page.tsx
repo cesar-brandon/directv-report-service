@@ -9,6 +9,7 @@ const dataDetail: ReportServiceTable = {
   name: "Maria Rodriguez",
   address: "Avenida Siempre Viva 456",
   district: "Grocio Prado",
+  serviceStatus: "Pendiente",
 };
 
 export default function Page() {

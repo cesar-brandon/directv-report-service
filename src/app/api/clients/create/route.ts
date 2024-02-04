@@ -4,11 +4,11 @@ import { db } from "@/lib/prisma";
 const POST = async (request: Request) => {
   const body = await request.json();
 
-//   const session = await getAuthSession();
+  //   const session = await getAuthSession();
 
-//   if (!session) {
-//     return new Response("Unauthorized", { status: 401 });
-//   }
+  //   if (!session) {
+  //     return new Response("Unauthorized", { status: 401 });
+  //   }
 
   try {
     const customer = await db.customer.create({
@@ -19,6 +19,7 @@ const POST = async (request: Request) => {
         email: body.email,
         cellNumber: body.phone,
         subscriptionDate: new Date(),
+        image: body.image,
       },
     });
 
